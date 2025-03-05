@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Heart Full of Love 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a2e, #4a0026, #800080);
+            background-size: 400% 400%;
+            overflow: hidden;
+            animation: backgroundFlow 15s ease-in-out infinite;
+            font-family: Arial, sans-serif;
+        }
+
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: #fff;
+            text-align: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .welcome-screen h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .welcome-screen p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #ffd700;
+            max-width: 600px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+
+        .start-button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #ff69b4, #ffd700);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 2s ease-out;
+        }
+
+        .heart-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            filter: url(#glow);
+            animation: floatHeart 3s ease-in-out infinite;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .heart-outline {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawHeart 3s ease forwards;
+        }
+
+        .heart {
+            fill: url(#heartGradient);
+            transform-origin: center;
+            opacity: 0;
+            animation: fillHeart 2s ease-in forwards 2s;
+        }
+
+        .fireflies {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .love-messages {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .message {
+            position: absolute;
+            color: #ffd700;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatMessage 4s ease-out forwards;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transform-origin: center;
+        }
+
+        .message.special {
+            font-size: 28px;
+            color: #ff69b4;
+            animation: specialMessage 5s ease-out forwards;
+        }
+
+        @keyframes backgroundFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes drawHeart {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes fillHeart {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(100px, -100px); opacity: 0; }
+        }
+
+        @keyframes floatMessage {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-200px); opacity: 0; }
+        }
+
+        @keyframes specialMessage {
+            0% {
+                transform: scale(0.5) translateY(0);
+                opacity: 0;
+            }
+            20% {
+                transform: scale(1.2) translateY(-20px);
+                opacity: 1;
+            }
+            80% {
+                transform: scale(1) translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8) translateY(-200px);
+                opacity: 0;
+            }
+        }
+
+        /* Add rain effect styles */
+        .rain-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.2), rgba(255, 192, 203, 0.4));
+            border-radius: 50%;
+            animation: rain linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes rain {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Interactive heart pulse effect */
+        .heart-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: scale(1);
+            border: 2px solid #ff69b4;
+            border-radius: 50%;
+            animation: heartPulse 1.5s ease-out forwards;
+        }
+
+        @keyframes heartPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1>💝 A Special Message for You 💝</h1>
+        <p>Someone special has sent you a magical heart filled with love and warmth. Click the button below to see what awaits you...</p>
+        <button class="start-button" onclick="startAnimation()">Open Your Heart ✨</button>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <div class="love-messages"></div>
+        <svg class="heart-container" viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ffd700" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#ff69b4" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ffd700" stop-opacity="0.8"/>
+                    <animate attributeName="x1" from="0%" to="100%" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="x2" from="100%" to="200%" dur="3s" repeatCount="indefinite"/>
+                </linearGradient>
+                <radialGradient id="heartGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stop-color="#ffd700"/>
+                    <stop offset="50%" stop-color="#ff69b4"/>
+                    <stop offset="100%" stop-color="#800080"/>
+                </radialGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feFlood flood-color="gold" flood-opacity="0.5" result="glowColor"/>
+                    <feComposite in="glowColor" in2="coloredBlur" operator="in" result="softGlow"/>
+                    <feMerge>
+                        <feMergeNode in="softGlow"/>
+                        <feMergeNode in="softGlow"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <path class="heart-outline" d="M50,88.9C25.5,78.9,1,56.5,1,35.8C1,19.6,13.4,6.1,28.6,6.1c8.9,0,17.3,4.4,22.4,11.8
+            c5.1-7.4,13.5-11.8,22.4-11.8C88.6,6.1,101,19.6,101,35.8c0,20.7-24.5,43.1-49,53.1H50z" 
+            stroke="url(#lineGradient)" stroke-width="2" fill="none"/>
+            <path class="heart" d="M50,88.9C25.5,78.9,1,56.5,1,35.8C1,19.6,13.4,6.1,28.6,6.1c8.9,0,17.3,4.4,22.4,11.8
+            c5.1-7.4,13.5-11.8,22.4-11.8C88.6,6.1,101,19.6,101,35.8c0,20.7-24.5,43.1-49,53.1H50z"/>
+        </svg>
+        <div class="fireflies"></div>
+    </div>
+
+    <div class="rain-container"></div>
+
+    <script>
+        // Enhanced messages array with categories
+        const messages = {
+            love: [
+                '永远爱你', '我的爱', '你和我', '永恒', '在一起',
+                '一直', '命中注定', '灵魂伴侣', '爱', '心心相印'
+            ],
+            romantic: [
+                '你是我的唯一', '想和你一起看日出', '每天想着你',
+                '你就是我的世界', '有你真好', '最美的意外'
+            ],
+            sweet: [
+                '我的小可爱', '你最特别', '遇见你是最美好的事',
+                '喜欢你的笑容', '和你在一起很开心', '你是我的小幸福'
+            ],
+            deep: [
+                '执子之手，与子偕老', '山无棱，天地合，乃敢与君绝',
+                '你是我最重要的人', '余生请多指教', '愿有岁月可回首，且以深情共白头'
+            ]
+        };
+
+        function startAnimation() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const container = document.getElementById('mainContainer');
+            
+            welcomeScreen.style.opacity = '0';
+            container.style.opacity = '1';
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                initializeAnimations();
+            }, 1000);
+        }
+
+        function createFirefly() {
+            const firefly = document.createElement('div');
+            firefly.className = 'firefly';
+            firefly.style.left = `${Math.random() * 100}%`;
+            firefly.style.top = `${Math.random() * 100}%`;
+            firefly.style.animationDelay = `${Math.random() * 4}s`;
+            document.querySelector('.fireflies').appendChild(firefly);
+
+            setTimeout(() => firefly.remove(), 4000);
+        }
+
+        // Create rain effect
+        function createRain() {
+            const rainContainer = document.querySelector('.rain-container');
+            const raindropsCount = 50;
+
+            for (let i = 0; i < raindropsCount; i++) {
+                const raindrop = document.createElement('div');
+                raindrop.className = 'raindrop';
+                raindrop.style.left = `${Math.random() * 100}%`;
+                raindrop.style.animationDuration = `${Math.random() * 1 + 1}s`;
+                raindrop.style.opacity = Math.random();
+                raindrop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(raindrop);
+
+                // Remove and recreate raindrop after animation
+                raindrop.addEventListener('animationend', () => {
+                    raindrop.remove();
+                    createRaindrop();
+                });
+            }
+        }
+
+        function createRaindrop() {
+            const rainContainer = document.querySelector('.rain-container');
+            const raindrop = document.createElement('div');
+            raindrop.className = 'raindrop';
+            raindrop.style.left = `${Math.random() * 100}%`;
+            raindrop.style.animationDuration = `${Math.random() * 1 + 1}s`;
+            raindrop.style.opacity = Math.random();
+            rainContainer.appendChild(raindrop);
+
+            raindrop.addEventListener('animationend', () => {
+                raindrop.remove();
+                createRaindrop();
+            });
+        }
+
+        // Enhanced love message creation
+        function createLoveMessage() {
+            const message = document.createElement('div');
+            message.className = 'message';
+            
+            // Randomly select message category and text
+            const categories = Object.keys(messages);
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            const messageArray = messages[category];
+            const text = messageArray[Math.floor(Math.random() * messageArray.length)];
+            
+            message.textContent = text;
+            message.style.left = `${20 + Math.random() * 60}%`;
+            message.style.top = `${50 + Math.random() * 20}%`;
+            
+            // Add special effects for deep messages
+            if (category === 'deep') {
+                message.classList.add('special');
+            }
+            
+            document.querySelector('.love-messages').appendChild(message);
+            setTimeout(() => message.remove(), 4000);
+        }
+
+        // Add heart pulse effect
+        function createHeartPulse(heart) {
+            const pulse = document.createElement('div');
+            pulse.className = 'heart-pulse';
+            heart.appendChild(pulse);
+            setTimeout(() => pulse.remove(), 1500);
+        }
+
+        // Enhanced heart click effect
+        document.querySelector('.heart-container').addEventListener('click', function(e) {
+            const heart = document.querySelector('.heart');
+            heart.style.animation = 'none';
+            heart.offsetHeight;
+            heart.style.animation = 'heartbeat 0.5s ease-in-out';
+            
+            // Create multiple pulses
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createHeartPulse(this), i * 200);
+            }
+
+            // Create burst of love messages
+            for (let i = 0; i < 5; i++) {
+                setTimeout(createLoveMessage, i * 300);
+            }
+        });
+
+        // Initialize animations with rain effect
+        function initializeAnimations() {
+            createRain();
+            setInterval(createFirefly, 500);
+            setInterval(createLoveMessage, 3000);
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createFirefly, i * 200);
+            }
+        }
+    </script>
+</body>
+</html> 

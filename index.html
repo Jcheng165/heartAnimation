@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Heart Animation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="love-messages"></div>
+        <div class="background-effects">
+            <div class="stars"></div>
+            <div class="mist"></div>
+        </div>
+        <svg class="heart-container" viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ffd700" stop-opacity="0.8"/>
+                    <stop offset="50%" stop-color="#ff69b4" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ffd700" stop-opacity="0.8"/>
+                    <animate attributeName="x1" from="0%" to="100%" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="x2" from="100%" to="200%" dur="3s" repeatCount="indefinite"/>
+                </linearGradient>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feFlood flood-color="gold" flood-opacity="0.5" result="glowColor"/>
+                    <feComposite in="glowColor" in2="coloredBlur" operator="in" result="softGlow"/>
+                    <feMerge>
+                        <feMergeNode in="softGlow"/>
+                        <feMergeNode in="softGlow"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <radialGradient id="heartGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stop-color="#ffd700"/>
+                    <stop offset="50%" stop-color="#ff69b4"/>
+                    <stop offset="100%" stop-color="#800080"/>
+                </radialGradient>
+                <filter id="particleGlow">
+                    <feGaussianBlur stdDeviation="1" result="blur"/>
+                    <feFlood flood-color="gold" result="color"/>
+                    <feComposite operator="in" in="color" in2="blur"/>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <path class="heart-outline" d="M50,88.9C25.5,78.9,1,56.5,1,35.8C1,19.6,13.4,6.1,28.6,6.1c8.9,0,17.3,4.4,22.4,11.8
+            c5.1-7.4,13.5-11.8,22.4-11.8C88.6,6.1,101,19.6,101,35.8c0,20.7-24.5,43.1-49,53.1H50z" 
+            stroke="url(#lineGradient)" stroke-width="2" fill="none"/>
+            <path class="heart" d="M50,88.9C25.5,78.9,1,56.5,1,35.8C1,19.6,13.4,6.1,28.6,6.1c8.9,0,17.3,4.4,22.4,11.8
+            c5.1-7.4,13.5-11.8,22.4-11.8C88.6,6.1,101,19.6,101,35.8c0,20.7-24.5,43.1-49,53.1H50z"/>
+        </svg>
+        <div class="heart-glow"></div>
+        <div class="fireflies"></div>
+        <div class="sparkles"></div>
+        <div class="aurora"></div>
+        <canvas class="particle-canvas"></canvas>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
